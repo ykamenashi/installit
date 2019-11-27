@@ -1,0 +1,31 @@
+#!/bin/bash
+
+TARGET_COMMAND="$1"
+COMMANDS_DIR=~/bin
+LINK_COMMAND="ln -s $(pwd)/$TARGET_COMMAND ${COMMANDS_DIR}/"
+
+usage(){
+cat << EOM
+  $0: $0 [FILE_TO_LINK_ON_CURRENT_DIR]
+
+  example:
+    \$ cd new-command/
+    \$ $0 new-command-name
+EOM
+exit 0
+}
+if [ $# -lt 1 ] ; then
+  usage
+fi
+
+if [ ! -d $COMMANDS_DIR ]; then
+  mkdir -p $COMMANDS_DIR
+fi
+
+#### prompt & execute the link ####
+
+echo "$LINK_COMMAND"
+echo -n ' is this OK to execute? (^C to quit) > '
+read -r ANS
+$LINK_COMMAND
+
